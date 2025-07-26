@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Vendor Dashboard{% endblock %}
+
+{% block content %}
+    <h2>Welcome, {{ g.user['name'] }} ({{ g.user['shop_business_name'] }})!</h2>
+    <p>Discover and order fresh ingredients and supplies from local suppliers.</p>
+
+    <div class="dashboard-layout">
+        <div class="categories-panel">
+            <div class="filter-section">
+                <h3>Shop by Category</h3>
+                <ul class="category-list">
+                    <li><button type="button" data-filter-category="all" class="active">All Categories</button></li>
+                    {% for category in categories %}
+                        <li><button type="button" data-filter-category="{{ category.category }}">{{ category.category }}</button></li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="filter-section" style="margin-top: 30px;">
+                <h3>Shop by Supplier</h3>
+                <ul class="supplier-list">
+                    <li><button type="button" data-filter-supplier="all" class="active">All Suppliers</button></li>
+                    {% for supplier in suppliers %}
+                        <li><button type="button" data-filter-supplier="{{ supplier.id }}">{{ supplier.shop_business_name }}</button></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="product-grid-container">
+            <h3>Products Available</h3>
+            <div class="product-grid" id="productGrid">
+                </div>
+        </div>
+
+        <div class="cart-panel">
+            <h3>Your Cart</h3>
+            <ul id="cartItems">
+                <li>Your cart is empty.</li>
+            </ul>
+            <p>Total Cart Value: <span id="cartTotal">0.00</span> INR</p>
+
+            <div class="payment-section">
+                <button type="button" class="btn btn-primary" id="proceedToPaymentBtn">Proceed to Payment</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="allProductsData" style="display: none;">
+        {{ all_supplier_products | tojson }}
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}

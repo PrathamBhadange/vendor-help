@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Supplier Dashboard{% endblock %}
+
+{% block content %}
+    <h2>Welcome, {{ g.user['name'] }} ({{ g.user['shop_business_name'] }})!</h2>
+    <p>View your incoming orders from vendors.</p>
+
+    <h3>Incoming Orders</h3>
+    {% if incoming_orders %}
+        {% for order in incoming_orders %}
+            <div class="order-card" style="border: 1px solid #ccc; padding: 15px; margin-bottom: 15px; border-radius: 5px;">
+                <p><strong>Order ID:</strong> {{ order.order_id }}</p>
+                <p><strong>Vendor:</strong> {{ order.vendor_name }}</p>
+                <p><strong>Date:</strong> {{ order.order_date }}</p>
+                <p><strong>Status:</strong> {{ order.status }}</p>
+                <p><strong>Total Amount:</strong> INR {{ "%.2f" | format(order.total_amount) }}</p>
+                <p><strong>Items:</strong></p>
+                <ul>
+                    {% for item_detail in order.items_summary.split(' ||| ') %}
+                        <li>{{ item_detail }}</li>
+                    {% endfor %}
+                </ul>
+                </div>
+        {% endfor %}
+    {% else %}
+        <p>No incoming orders yet.</p>
+    {% endif %}
+{% endblock %}

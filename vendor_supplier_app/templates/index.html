@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+    <h2>Welcome to the Street Food Vendor & Supplier App!</h2>
+    <p>Your one-stop solution to bridge the gap between street food vendors and raw material suppliers.</p>
+    <p>Get fresh produce and essential ingredients easily. For suppliers, expand your reach to local vendors.</p>
+
+    {% if not g.user %}
+        <h3>Get Started</h3>
+        <p>
+            <a href="{{ url_for('register') }}" class="btn">Register Now</a>
+            <a href="{{ url_for('login') }}" class="btn">Login</a>
+        </p>
+    {% endif %}
+{% endblock %}
